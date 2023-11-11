@@ -1,0 +1,28 @@
+name: Build and Publish GAP
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+    build:
+        name: Build Extension
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout repository
+            uses: actions/checkout@v3
+
+          - name: Build
+            run: |
+              cd src
+              sed -i '/"incognito": "split",/d' ./manifest.json
+              zip GAP.zip -r *
+
+          - uses: wdzeng/firefox-addon@v1
+            with:
+                addon-guid: 0469ebe7-5b56-45cf-924c-480c5e14aa10
+                xpi-path: src/GAP.zip
+                self-hosted: true
+                jwt-issuer: ${{ secrets.FIREFOX_JWT_ISSUER }}
+                jwt-secret: ${{ secrets.FIREFOX_JWT_SECRET }}

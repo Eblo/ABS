@@ -5,6 +5,8 @@ chrome.runtime.onConnect.addListener(port => {
   port.onMessage.addListener(async msg => {
     switch (msg.type) {
       case constants.MESSAGE_TYPES.START_SEARCH: {
+        // Open a new tab to the engine so that we know the extension is on a page for which it has permission
+        chrome.tabs.create({ url: constants.TEST_URL });
         const tab = await getCurrentTab();
         if (tab) startSearches(tab.id);
         break;

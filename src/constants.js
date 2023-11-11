@@ -51,6 +51,7 @@ const constants = Object.freeze({
       "bubbles": true,
       "cancelable": false
   }));`,
+  TEST_URL: 'https://bing.com/search?q=bing',
   REWARDS_URL: 'https://rewards.bing.com/',
   DAILY_TRENDS_API: 'https://trends.google.com/trends/api/dailytrends?geo=US',
   NUM_DAILY_TREND_FETCHES: 4,
