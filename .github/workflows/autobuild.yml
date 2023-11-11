@@ -6,23 +6,37 @@ on:
       - master
 
 jobs:
-    build:
-        name: Build Extension
+    build-firefox:
+        name: Build and Publish Extension for Firefox
         runs-on: ubuntu-latest
         steps:
           - name: Checkout repository
             uses: actions/checkout@v3
-
-          - name: Build
+        
+          - name: Hack to remove incognito split for Firefox
             run: |
-              cd src
-              sed -i '/"incognito": "split",/d' ./manifest.json
-              zip GAP.zip -r *
+                 cd src
+                 sed -i '/"incognito": "split",/d' ./manifest.json
 
-          - uses: wdzeng/firefox-addon@v1
+          - name: "web-ext build"
+            id: web-ext-build
+            uses: kewisch/action-web-ext@v1
             with:
-                addon-guid: 0469ebe7-5b56-45cf-924c-480c5e14aa10
-                xpi-path: src/GAP.zip
-                self-hosted: true
-                jwt-issuer: ${{ secrets.FIREFOX_JWT_ISSUER }}
-                jwt-secret: ${{ secrets.FIREFOX_JWT_SECRET }}
+                cmd: build
+                source: src
+
+          - name: "web-ext sign"
+            id: web-ext-sign
+            uses: kewisch/action-web-ext@v1
+            with:
+                cmd: sign
+                source: ${{ steps.web-ext-build.outputs.target }}
+                channel: unlisted
+                apiKey: ${{ secrets.FIREFOX_JWT_ISSUER }}
+                apiSecret: ${{ secrets.FIREFOX_JWT_SECRET }}
+                timeout: 900000
+
+          - name: "Create Release"
+            uses: softprops/action-gh-release@v1
+            with:
+                files: ${{ steps.web-ext-sign.outputs.target }}
