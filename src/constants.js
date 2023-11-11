@@ -43,6 +43,14 @@ const constants = Object.freeze({
     CORRECT_ANSWER_RECEIVED: 5, // window-variable-grabber script => content script
     OPEN_URL_IN_BACKGROUND: 6, // window-variable-grabber script => content script => background script
   }),
+  SEARCH_SCRIPT: `const searchBar = document.getElementById('sb_form_q');
+  searchBar.value = 'VALUE_HERE';
+  const searchButton = document.getElementById('sb_form_go');
+  searchButton.dispatchEvent(new MouseEvent("click", {
+      "view": window,
+      "bubbles": true,
+      "cancelable": false
+  }));`,
   REWARDS_URL: 'https://rewards.bing.com/',
   DAILY_TRENDS_API: 'https://trends.google.com/trends/api/dailytrends?geo=US',
   NUM_DAILY_TREND_FETCHES: 4,

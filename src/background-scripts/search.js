@@ -81,8 +81,9 @@ async function search(isMobile) {
 
   return new Promise(async (resolve, reject) => {
     const query = await getSearchQuery();
-    chrome.tabs.update(currentSearchingTabId, {
-      url: `https://bing.com/search?q=${query}`,
+    const queryScript = constants.SEARCH_SCRIPT.replace(/VALUE_HERE/, query);
+    chrome.tabs.executeScript(currentSearchingTabId, {
+      code: queryScript
     }, () => {
       // we expect an error if there is the tab is closed, for example
       if (chrome.runtime.lastError) return reject(chrome.runtime.lastError);
