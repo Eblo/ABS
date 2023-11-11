@@ -36,12 +36,6 @@ jobs:
                 apiSecret: ${{ secrets.FIREFOX_JWT_SECRET }}
                 timeout: 900000
 
-          - name: Upload archive
-            uses: actions/upload-artifact@v3
-            with:
-                name: GAP-${{steps.web-ext-sign.outputs}}
-                path: build/Build/Products/Release/Z-universal.app.zip
-
           - name: "Create Release"
             uses: softprops/action-gh-release@v1
             with:
