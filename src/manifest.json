@@ -1,7 +1,7 @@
 {
   "name": "GAP",
   "description": "Automatically perform daily searches and collect bonus reward points. Forked for compatibility updates.",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "manifest_version": 2,
   "icons": { "16": "icons/icon16.png", "48": "icons/icon48.png", "128": "icons/icon128.png" },
   "content_scripts": [{
@@ -41,7 +41,6 @@
     "persistent": true
   },
   "incognito": "split",
-  "content_security_policy": "script-src 'self' https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js; object-src 'self'",
   "browser_action": {
     "default_popup": "popup.html"
   },
