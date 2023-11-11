@@ -72,5 +72,10 @@
     "tabs",
     "alarms",
     "storage"
-  ]
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{0469ebe7-5b56-45cf-924c-480c5e14aa10}"
+    }
+  }
 }
